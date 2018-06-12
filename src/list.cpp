@@ -1,6 +1,3 @@
-#ifndef LIST_HPP
-#define LIST_HPP
-
 #include <list.hpp>
 #include <iostream>
 #include <limits.h>
@@ -12,46 +9,46 @@ List::List():first(0),last(0),size(0)
 
 List::List(int v):first(0),last(0),size(0)
 {
-	first = new Node();
-	last = first;
-	first->value = v;
-	++size;
+	add(0,v);
 }
 
 bool List::add(unsigned int i, int v)
 {
-	std::cout<< "index" << i <<std::endl;
-	std::cout<< "value" << v <<std::endl;
-	if((0 != i) && is_out(i - 1)) {
+	if((0 != i) && is_out(i - 1)){
 		return false;
+	}
+	if(0 == size || size == i){
+		return push(v);
 	}
 	Node* new_node = new Node();
 	new_node->value = v;
 	assert(NULL != new_node);
-	if(0 == size) {
-		first = new_node;
-		last = new_node;
-		++size;
-		return true;
-	}
-	if( size == i){
-		last->next = new_node;
-		new_node->previous = last;
-		last = new_node;
-		++size;
-		return true;
-	}
 	Node* p = get_node(i);
-	std::cout << "pointer " << p << std::endl;
 	Node* n = p->next;
-	assert(NULL !=n);
 	p->next=new_node;
 	new_node->previous = p;
 	if(n) {
-	    assert(NULL != n);
-	    new_node->next = n;
-	    n->previous = new_node;
+		assert(NULL != n);
+		new_node->next = n;
+		n->previous = new_node;
 	}
+	++size;
+	return true;
+}
+
+bool List::push(int v)
+{
+	Node* new_node = new Node();
+	new_node->value = v;
+	if(size = 0){
+		first = new_node;
+		last = new_node;
+		++size;
+		return true;    
+	}
+	last->next = new_node;
+	new_node->previous = last;
+	last = new_node;
 	++size;
 	return true;
 }
@@ -62,7 +59,7 @@ bool List::remove(unsigned int i)
 	if(this->is_out(i)) {
 		return false;
 	}
-	
+
 	Node* old = get_node(i);
 	assert(NULL != old);
 	Node* p = old->previous;
@@ -96,13 +93,13 @@ int List::search_by_value(int v)
 	return -1;
 }
 
-int List::get(unsigned int i) //const
+int List::get(unsigned int i) const
 {
 	int r = INT_MAX;
 	if(is_out(i)) {
 		return r;
 	}	
-	Node* n = get_node(i);
+	const Node* n = get_node(i);
 	assert(NULL != n);
 	int result = n->value;
 	return result;
@@ -137,6 +134,18 @@ bool List::swap(unsigned int i, unsigned int j)
 	return true;
 }
 
+void List::print()
+{
+	int s = size;
+	Node* n = first;
+	while( (NULL != n)) {
+		std::cout << n->value << ", " ;
+		n = n->next;
+		--s;
+	}
+	std::cout <<std::endl;
+}
+
 bool List::is_out(unsigned int i) const
 {
 	if(i >= size) {
@@ -162,8 +171,6 @@ Node* List::get_node(unsigned int i)
 	Node* n = first;
 	assert(NULL != n);
 	while( r != i) {
-		std::cout <<  "r is " << r << std::endl;
-		std::cout <<  "i is " << i << std::endl;
 		Node* next = n->next;
 		n = next;
 		++r;
@@ -180,13 +187,13 @@ const Node* List::get_node(unsigned int i) const
 	int r=0;
 	Node* n = first;
 	assert(NULL != n);
-	while(r != i ) {
-		n = n->next;	
-		++i;
+	while( r != i) {
+		Node* next = n->next;
+		n = next;
+		++r;
 	}
 	assert(NULL != n);
 	return n;
 }
 
 
-#endif

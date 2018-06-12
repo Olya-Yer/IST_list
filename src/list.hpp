@@ -46,7 +46,15 @@ class List
 		 * @return true if the operation is succsefully done, false
 		     otherwise
 		 */
-		bool add(unsigned int, int);
+		bool add(unsigned int, int);	
+		
+		/**
+		 * @brief adds an element at the end of the list
+		 * @param int the value
+		 * @return true if the operation is succsefully done, false
+		     otherwise
+		 */
+		bool push(int);
 		/**
 		 * @brief removes the  element of the given position
 		 * @param unsigned int the position
@@ -67,7 +75,7 @@ class List
 		 * @return the value of the given index, if the index 
 		 *	   is in the range, INT:MAX otherwise
 		 */
-		int get(unsigned int);// const;
+		int get(unsigned int) const;
 	    	/**
 		 * @brief changes the value of the given elements element
 		 * @param unsigned int the position
@@ -84,5 +92,6 @@ class List
 		     otherwise
 		 */
 		bool swap(unsigned int, unsigned int);
+		void print();
 };
 
