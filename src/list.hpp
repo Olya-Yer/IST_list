@@ -1,7 +1,9 @@
+#ifndef LIST_HPP
+#define LIST_HPP
 #include <node.hpp>
 class List
 {
-	private:
+	protected:
 		/**
 		 * a pointer to the first node
 		 */
@@ -114,4 +116,4 @@ class List
 		 */
 		int get_last();
 };
-
+#endif
