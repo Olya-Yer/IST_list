@@ -18,11 +18,15 @@ deps/%.dep : src/%.cpp
 
 -include $(DEPENDS)
 
-.PHONY : clean docs
+.PHONY : clean docs test
 clean :
 	@echo "cleaning up"
 	@rm -rf  deps obj bin docs/doxygen test_results.txt
+	@$(MAKE) -C ./tests clean;
 	
 docs : 
 	@mkdir -p docs/doxygen
 	@doxygen docs/doxygen_config/config
+
+test :
+	@$(MAKE) -C ./tests;

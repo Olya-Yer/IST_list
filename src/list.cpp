@@ -23,14 +23,16 @@ bool List::add(unsigned int i, int v)
 	Node* new_node = new Node();
 	new_node->value = v;
 	assert(NULL != new_node);
-	Node* p = get_node(i);
-	Node* n = p->next;
-	p->next=new_node;
-	new_node->previous = p;
-	if(n) {
-		assert(NULL != n);
-		new_node->next = n;
-		n->previous = new_node;
+	Node* old = get_node(i);
+	Node* p = old->previous;
+	if(p) {
+		p->next = new_node;
+		new_node->previous = p;
+	}
+	new_node->next = old;
+	old->previous = new_node;
+	if(0 == i) {
+	    first = new_node;
 	}
 	++size;
 	return true;
@@ -40,26 +42,58 @@ bool List::push(int v)
 {
 	Node* new_node = new Node();
 	new_node->value = v;
-	if(size = 0){
+	if(0 == size){
 		first = new_node;
 		last = new_node;
 		++size;
 		return true;    
 	}
-	last->next = new_node;
-	new_node->previous = last;
+	Node* temp = last;
+	new_node->previous = temp;
+	temp->next = new_node;
 	last = new_node;
 	++size;
-	return true;
+	if(last->previous) {
+		return true;
+	}
+	return false;
+}
+
+bool List::pop()
+{
+	if(0 == size) {
+		return true;
+	}
+	if(1 == size) {
+		delete first;
+		first = NULL;
+		last = NULL;
+		--size;
+		return true;
+	}
+	Node* old = last;
+	assert(NULL != old);
+	last = last->previous;
+	last->next = NULL;
+	assert(NULL != last);
+	old->previous = NULL;
+	delete old;
+	--size;
+	if(last) {
+		return true;
+	}
+	return false;
 }
 
 
 bool List::remove(unsigned int i)
 {
-	if(this->is_out(i)) {
+	if(is_out(i)) {
 		return false;
 	}
-
+	if(size -1 == i) {
+		return pop();
+	}
 	Node* old = get_node(i);
 	assert(NULL != old);
 	Node* p = old->previous;
@@ -70,12 +104,14 @@ bool List::remove(unsigned int i)
 	if(n) {
 		n->previous = p;
 	}
-	p->next = NULL;
-	p->previous = NULL;
-	delete p;
+	old->next = NULL;
+	old->previous = NULL;
+	delete old;
 	if(0 == i) {
 		first = n;
 	}
+	--size;
+	return true;
 }
 
 int List::search_by_value(int v)
@@ -146,21 +182,31 @@ void List::print()
 	std::cout <<std::endl;
 }
 
-bool List::is_out(unsigned int i) const
+int List::get_first()
 {
-	if(i >= size) {
-		return false;
+	if(NULL != first) {
+		return first->value;
 	}
-	return true;
+	return INT_MAX;
 }
 
-bool List::is_out(unsigned int i)
+int List::get_last()
+{
+	if(NULL != last) {
+		return last->value;
+	}
+	return INT_MAX;
+}
+
+bool List::is_out(unsigned int i) const
 {
 	if(i < size) {
 		return false;
 	}
 	return true;
 }
+
+
 
 Node* List::get_node(unsigned int i)
 {
@@ -195,5 +241,8 @@ const Node* List::get_node(unsigned int i) const
 	assert(NULL != n);
 	return n;
 }
-
+List::~List()
+{
+	delete first;
+}
 

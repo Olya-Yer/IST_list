@@ -19,11 +19,6 @@ class List
 		 */
 		bool is_out(unsigned int) const;	
 		/**
-		 * checks if the index is in the range of the size
-		 */
-		bool is_out(unsigned int);
-
-		/**
 		 * returns the node in the given position
 		 */
 		Node* get_node(unsigned int);
@@ -47,7 +42,11 @@ class List
 		     otherwise
 		 */
 		bool add(unsigned int, int);	
-		
+		/**
+		 * @brief class destructor
+		 * @iterates over all existing nodes and deletes them
+		 */
+		~List();
 		/**
 		 * @brief adds an element at the end of the list
 		 * @param int the value
@@ -55,6 +54,12 @@ class List
 		     otherwise
 		 */
 		bool push(int);
+		/**
+		 * @brief removes the last element of the list
+		 * @return true if the operation is succsefully done, false
+		     otherwise
+		 */
+		bool pop();
 		/**
 		 * @brief removes the  element of the given position
 		 * @param unsigned int the position
@@ -92,6 +97,21 @@ class List
 		     otherwise
 		 */
 		bool swap(unsigned int, unsigned int);
+		/**
+		 * @brief prints the current content of the list
+		 */
 		void print();
+		/**
+		 * @brief returns value of the first element if it exists , INT_MAX 
+		 *	    otherwise
+		 *@return int value of the first element, INT_MAX otherwise
+		 */
+		int get_first();
+		/**
+		 * @brief returns value of the last element if it exists , INT_MAX 
+		 *	    otherwise
+		 *@return int value of the last element, INT_MAX otherwise
+		 */
+		int get_last();
 };
 
