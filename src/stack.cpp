@@ -39,6 +39,11 @@ bool Stack::make_empty()
 	return true;
 }
 
+unsigned int Stack::get_size()
+{
+	return List::get_size();
+}
+
 void Stack::print()
 {
 	List::print();

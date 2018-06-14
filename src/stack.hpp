@@ -46,5 +46,10 @@ class Stack: private List
 		 * @brief print the stack
 		 */
 		void print();
+		/**
+		 * @brief returns current size of the stack
+		 * @retrun unsigned int size of the stack
+		 */
+		unsigned int get_size();
 };
 #endif

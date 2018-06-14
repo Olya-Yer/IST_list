@@ -32,7 +32,7 @@ class List
 		List();
 		/**
 		 * @brief parametralized constrtuctor
-		 * @detail creates a list with one element , with given value,
+		 * @details creates a list with one element , with given value,
 		 * @param int the value of the node
 		 */
 		List(int);
@@ -116,5 +116,12 @@ class List
 		 *@return int value of the last element, INT_MAX otherwise
 		 */
 		int get_last();
+
+		/**
+		 * @brief returnes the size of the list
+		 * @return unsigned int the size of the list
+		 */
+
+		unsigned int get_size();
 };
 #endif

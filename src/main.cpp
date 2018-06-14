@@ -1,50 +1,50 @@
 #include <list.hpp>
 #include <stack.hpp>
+#include <queue.hpp>
 #include <iostream>
+
+void quick_sort(List& l, int left, int right);
 
 int main()
 {
-//	List* list = new List();
-//	std::cout << "Adding elements to the list" << std::endl;
-//	list->add(0,1); 
-//	list->add(1,2);
-//	list->add(1,3);
-//	list->print();
-//	list->add(0,4);
-//	list->print();
-//	std::cout << "search by value , v = 2" << std::endl;
-//	std::cout << list->search_by_value(2) << std::endl;
-//	std::cout << "get, i = 1" << std::endl;
-//	std::cout << list->search_by_value(2) << std::endl;
-//	std::cout << "swaping 0 and 1" << std::endl;
-//	list->swap(0,1);
-//	list->print();
-//	std::cout << "remove 1st and 2nd" << std::endl;
-//	list->remove(1);
-//	list->remove(2);
-//	list->print();
-//	delete list;
-//	List list(4);
-//	list.push(1);
-//	list.push(3);
-//	list.print();
-//	List cp = list;
-//	cp.print();
-//	cp.push(5);
-//	cp.push(6);
-//	list.print();
-//	cp.print();
-	
-	Stack stack;
-	stack.push(2);
-	stack.push(3);
-	stack.push(5);
-	stack.push(6);
-	stack.print();
-	stack.make_empty();
-	stack.print();
-//	stack.pop();
-//	stack.pop();
-//	stack.print();
+	List* list = new List();
+	std::cout << "Adding elements to the list" << std::endl;
+	list->add(0,7); 
+	list->add(1,20);
+	list->add(2,1);
+	list->print();
+	int size = list->get_size();
+	quick_sort(*list,0,size-1);
+	list->print();
 	return 0;
 }
+
+
+void quick_sort(List& l, int left, int right)
+{
+	int i = left;
+	int j = right;
+	int m = (int) (left + right)/2;
+	int pivot = l.get(m);
+
+	while (i < j){
+		while (l.get(i) < pivot && !(i>right)) {
+			++i;
+		}
+		while (l.get(j) > pivot && !(j<0)) {
+			--j;
+		}
+		if (i <= j){
+			l.swap(i, j);
+			++i;
+			--j;
+		}
+	}
+	if (left < j) {
+		quick_sort (l, left , j);
+	}
+	if (i < right) {
+		quick_sort (l , i, right);
+	}
+}
+

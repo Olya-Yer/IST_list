@@ -85,6 +85,9 @@ bool List::pop()
 	return false;
 }
 
+unsigned int List::get_size(){
+    return size;
+}
 
 bool List::remove(unsigned int i)
 {
