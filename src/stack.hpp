@@ -5,9 +5,6 @@
 
 class Stack: private List 
 {
-	private:
-		Node* top;
-		List* list;
 	public:
 		/**
 		 * @brief default constructor

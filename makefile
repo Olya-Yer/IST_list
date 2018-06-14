@@ -1,5 +1,6 @@
 SOURCES := $(wildcard src/*.cpp)
 OBJECTS := $(patsubst src/%.cpp, obj/%.o, $(SOURCES))
+TESTS :=  $(sort $(dir $(wildcard ./tests/*/)))
 DEPENDS := $(patsubst src/%.cpp, deps/%.dep, $(SOURCES))
 INCLUDES := -I./src
 
@@ -22,11 +23,16 @@ deps/%.dep : src/%.cpp
 clean :
 	@echo "cleaning up"
 	@rm -rf  deps obj bin docs/doxygen test_results.txt
-	@$(MAKE) -C ./tests clean;
+	for dir in $(TESTS); do \
+		$(MAKE) -C $$dir clean ; \
+	done
 	
 docs : 
 	@mkdir -p docs/doxygen
 	@doxygen docs/doxygen_config/config
 
-test :
-	@$(MAKE) -C ./tests;
+test : 
+	@touch ./test_results.txt
+	for dir in $(TESTS); do \
+		$(MAKE) -C $$dir; \
+	done

@@ -36,6 +36,7 @@ class List
 		 * @param int the value of the node
 		 */
 		List(int);
+		List(const List &l);
 		/**
 		 * @brief adds an element to the given position
 		 * @param unsigned int the position

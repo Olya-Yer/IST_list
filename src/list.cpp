@@ -206,8 +206,6 @@ bool List::is_out(unsigned int i) const
 	return true;
 }
 
-
-
 Node* List::get_node(unsigned int i)
 {
 	if(is_out(i)) {
@@ -241,6 +239,18 @@ const Node* List::get_node(unsigned int i) const
 	assert(NULL != n);
 	return n;
 }
+
+List::List(const List &l)
+	:first(0),last(0),size(0)
+{
+	Node* n = l.first;
+	while(NULL != n) {
+		int v = n->value;
+		this->push(v);
+    		n = n->next;
+	}
+}
+
 List::~List()
 {
 	delete first;

@@ -24,15 +24,27 @@ int main()
 //	list->remove(2);
 //	list->print();
 //	delete list;
+//	List list(4);
+//	list.push(1);
+//	list.push(3);
+//	list.print();
+//	List cp = list;
+//	cp.print();
+//	cp.push(5);
+//	cp.push(6);
+//	list.print();
+//	cp.print();
+	
 	Stack stack;
-	Stack stack1(1);
 	stack.push(2);
 	stack.push(3);
 	stack.push(5);
 	stack.push(6);
 	stack.print();
-	stack.pop();
-	stack.pop();
+	stack.make_empty();
 	stack.print();
+//	stack.pop();
+//	stack.pop();
+//	stack.print();
 	return 0;
 }
